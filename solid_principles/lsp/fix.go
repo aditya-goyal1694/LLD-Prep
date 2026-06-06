@@ -2,11 +2,20 @@ package main
 
 import "fmt"
 
-type Worker interface {
-	WriteCode() error
-	RunTests() error
-	DeployApplication() error
-	CreateDesignDocument() error
+type Developer interface{
+    WriteCode() error
+}
+
+type Tester interface {
+    RunTests() error
+}
+
+type Deployer interface {
+    DeployApplication() error
+}
+
+type Documenter interface {
+    CreateDesignDocument() error
 }
 
 type SoftwareEngineer struct{}
@@ -43,25 +52,33 @@ func (i *Intern) RunTests() error {
 	return nil
 }
 
-func (i *Intern) DeployApplication() error {
-	return fmt.Errorf("interns cannot deploy")
+func AssignCodingTask(d Developer) {
+	_ = d.WriteCode()
 }
 
-func (i *Intern) CreateDesignDocument() error {
-	return fmt.Errorf("interns do not create design documents")
+func AssignTestingTask(t Tester) {
+	_ = t.RunTests()
 }
 
-func StartWorkday(w Worker) {
-	_ = w.WriteCode()
-	_ = w.RunTests()
-	_ = w.DeployApplication()
-	_ = w.CreateDesignDocument()
+func AssignDeploymentTask(d Deployer) {
+	_ = d.DeployApplication()
+}
+
+func AssignDocumentationTask(d Documenter) {
+	_ = d.CreateDesignDocument()
 }
 
 func main() {
 	engineer := &SoftwareEngineer{}
 	intern := &Intern{}
 
-	StartWorkday(engineer)
-	StartWorkday(intern)
+	AssignCodingTask(engineer)
+	AssignTestingTask(engineer)
+	AssignDeploymentTask(engineer)
+	AssignDocumentationTask(engineer)
+
+	fmt.Println()
+
+	AssignCodingTask(intern)
+	AssignTestingTask(intern)
 }
