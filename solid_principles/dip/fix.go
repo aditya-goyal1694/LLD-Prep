@@ -5,11 +5,19 @@ import (
 	"time"
 )
 
+type OrderRepository interface {
+    SaveOrder(orderID string) error
+}
+
 type MySQLDatabase struct{}
 
 func (db *MySQLDatabase) SaveOrder(orderID string) error {
 	fmt.Printf("Saving order %s to MySQL\n", orderID)
 	return nil
+}
+
+type OrderNotifier interface {
+    SendConfirmation(orderID string) error
 }
 
 type EmailService struct{}
@@ -20,14 +28,14 @@ func (e *EmailService) SendConfirmation(orderID string) error {
 }
 
 type OrderService struct {
-	db    *MySQLDatabase
-	email *EmailService
+	db    Database
+	notification Notification
 }
 
-func NewOrderService() *OrderService {
+func NewOrderService(db Database, notification Notification) *OrderService {
 	return &OrderService{
-		db:    &MySQLDatabase{},
-		email: &EmailService{},
+		db:    db,
+		notification: notification,
 	}
 }
 
@@ -40,7 +48,7 @@ func (s *OrderService) PlaceOrder(orderID string) error {
 		return err
 	}
 
-	if err := s.email.SendConfirmation(orderID); err != nil {
+	if err := s.notification.SendConfirmation(orderID); err != nil {
 		return err
 	}
 
@@ -54,7 +62,7 @@ func (s *OrderService) PlaceOrder(orderID string) error {
 }
 
 func main() {
-	service := NewOrderService()
+	service := NewOrderService(&MySQLDatabase{},&EmailService{})
 
 	if err := service.PlaceOrder("ORD-1001"); err != nil {
 		fmt.Println(err)
