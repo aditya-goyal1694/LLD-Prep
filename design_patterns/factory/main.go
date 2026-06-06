@@ -5,7 +5,7 @@ package main
 import (
 	"log"
 
-	"github.com/aditya-goyal1694/LLD-Prep/design_patterns/factory/factory"
+	"lld/design_patterns/factory/factory"
 )
 
 func main() {

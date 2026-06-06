@@ -3,45 +3,42 @@
 package exporter
 
 import (
-    "fmt"
+	"fmt"
 )
 
 type Exporter interface {
 	Export(data string) error
 }
 
-
-type PDFExporter struct {}
+type PDFExporter struct{}
 
 func NewPDFExporter() *PDFExporter {
-    return &PDFExporter{}
+	return &PDFExporter{}
 }
 
 func (p *PDFExporter) Export(data string) error {
-    fmt.Printf("Exporting pdf file...")
-    return nil
+	fmt.Printf("Exporting pdf file...")
+	return nil
 }
 
-
-type CSVExporter struct {}
+type CSVExporter struct{}
 
 func NewCSVExporter() *CSVExporter {
-    return &CSVExporter{}
+	return &CSVExporter{}
 }
 
 func (c *CSVExporter) Export(data string) error {
-    fmt.Printf("Exporting csv file...")
-    return nil
+	fmt.Printf("Exporting csv file...")
+	return nil
 }
 
-
-type ExcelExporter struct {}
+type ExcelExporter struct{}
 
 func NewExcelExporter() *ExcelExporter {
-    return &ExcelExporter{}
+	return &ExcelExporter{}
 }
 
 func (e *ExcelExporter) Export(data string) error {
-    fmt.Printf("Exporting excel file...")
-    return nil
+	fmt.Printf("Exporting excel file...")
+	return nil
 }
