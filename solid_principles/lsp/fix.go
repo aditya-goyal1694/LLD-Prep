@@ -1,84 +1,47 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
-type Developer interface{
-    WriteCode() error
+type Bird interface {
+    Name() string
 }
 
-type Tester interface {
-    RunTests() error
+type FlyingBird interface {
+    Bird
+    Fly() error
 }
 
-type Deployer interface {
-    DeployApplication() error
+type Sparrow struct{}
+
+func (s *Sparrow) Name() string {
+	return "sparrow"
 }
 
-type Documenter interface {
-    CreateDesignDocument() error
-}
-
-type SoftwareEngineer struct{}
-
-func (s *SoftwareEngineer) WriteCode() error {
-	fmt.Println("Writing code...")
+func (s *Sparrow) Fly() error {
+	fmt.Println("Sparrow is flying")
 	return nil
 }
 
-func (s *SoftwareEngineer) RunTests() error {
-	fmt.Println("Running tests...")
-	return nil
+type Penguin struct{}
+
+func (p *Penguin) Name() string {
+	return "penguin"
 }
 
-func (s *SoftwareEngineer) DeployApplication() error {
-	fmt.Println("Deploying application...")
-	return nil
-}
-
-func (s *SoftwareEngineer) CreateDesignDocument() error {
-	fmt.Println("Creating design document...")
-	return nil
-}
-
-type Intern struct{}
-
-func (i *Intern) WriteCode() error {
-	fmt.Println("Writing code...")
-	return nil
-}
-
-func (i *Intern) RunTests() error {
-	fmt.Println("Running tests...")
-	return nil
-}
-
-func AssignCodingTask(d Developer) {
-	_ = d.WriteCode()
-}
-
-func AssignTestingTask(t Tester) {
-	_ = t.RunTests()
-}
-
-func AssignDeploymentTask(d Deployer) {
-	_ = d.DeployApplication()
-}
-
-func AssignDocumentationTask(d Documenter) {
-	_ = d.CreateDesignDocument()
+func MakeBirdFly(b FlyingBird) error {
+	return b.Fly()
 }
 
 func main() {
-	engineer := &SoftwareEngineer{}
-	intern := &Intern{}
+	flyingbirds := []FlyingBird{
+		&Sparrow{},
+	}
 
-	AssignCodingTask(engineer)
-	AssignTestingTask(engineer)
-	AssignDeploymentTask(engineer)
-	AssignDocumentationTask(engineer)
-
-	fmt.Println()
-
-	AssignCodingTask(intern)
-	AssignTestingTask(intern)
+	for _, bird := range flyingbirds {
+		if err := MakeBirdFly(bird); err != nil {
+			fmt.Println("Error:", err)
+		}
+	}
 }
