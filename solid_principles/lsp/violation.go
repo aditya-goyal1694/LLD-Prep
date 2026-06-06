@@ -1,67 +1,39 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
-type Worker interface {
-	WriteCode() error
-	RunTests() error
-	DeployApplication() error
-	CreateDesignDocument() error
+type Bird interface {
+	Fly() error
 }
 
-type SoftwareEngineer struct{}
+type Sparrow struct{}
 
-func (s *SoftwareEngineer) WriteCode() error {
-	fmt.Println("Writing code...")
+func (s *Sparrow) Fly() error {
+	fmt.Println("Sparrow is flying")
 	return nil
 }
 
-func (s *SoftwareEngineer) RunTests() error {
-	fmt.Println("Running tests...")
-	return nil
+type Penguin struct{}
+
+func (p *Penguin) Fly() error {
+	return fmt.Errorf("penguins cannot fly")
 }
 
-func (s *SoftwareEngineer) DeployApplication() error {
-	fmt.Println("Deploying application...")
-	return nil
-}
-
-func (s *SoftwareEngineer) CreateDesignDocument() error {
-	fmt.Println("Creating design document...")
-	return nil
-}
-
-type Intern struct{}
-
-func (i *Intern) WriteCode() error {
-	fmt.Println("Writing code...")
-	return nil
-}
-
-func (i *Intern) RunTests() error {
-	fmt.Println("Running tests...")
-	return nil
-}
-
-func (i *Intern) DeployApplication() error {
-	return fmt.Errorf("interns cannot deploy")
-}
-
-func (i *Intern) CreateDesignDocument() error {
-	return fmt.Errorf("interns do not create design documents")
-}
-
-func StartWorkday(w Worker) {
-	_ = w.WriteCode()
-	_ = w.RunTests()
-	_ = w.DeployApplication()
-	_ = w.CreateDesignDocument()
+func MakeBirdFly(b Bird) error {
+	return b.Fly()
 }
 
 func main() {
-	engineer := &SoftwareEngineer{}
-	intern := &Intern{}
+	birds := []Bird{
+		&Sparrow{},
+		&Penguin{},
+	}
 
-	StartWorkday(engineer)
-	StartWorkday(intern)
+	for _, bird := range birds {
+		if err := MakeBirdFly(bird); err != nil {
+			fmt.Println("Error:", err)
+		}
+	}
 }
