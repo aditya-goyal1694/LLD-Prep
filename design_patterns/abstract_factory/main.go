@@ -2,7 +2,7 @@ package main
 
 import (
     "fmt"
-    "github.com/aditya-goyal1694/LLD-Prep/design_patterns/abstract_factory/factory"
+    "lld/design_patterns/abstract_factory/factory"
 )
 
 func main() {

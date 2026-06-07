@@ -2,7 +2,7 @@ package factory
 
 import (
     "fmt"
-    "github.com/aditya-goyal1694/LLD-Prep/design_patterns/abstract_factory/widget"
+    "lld/design_patterns/abstract_factory/widget"
 )
 
 
